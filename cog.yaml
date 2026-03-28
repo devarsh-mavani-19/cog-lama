@@ -27,6 +27,7 @@ build:
     - "webdataset"
     - "packaging"
     - "pandas"
+    - "matplotlib"
   run:
     - "pip install wldhx.yadisk-direct"
     - "git clone https://github.com/advimman/lama.git /lama"
