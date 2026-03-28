@@ -11,8 +11,7 @@ import tempfile
 import cv2
 import numpy as np
 import torch
-import yaml
-from easydict import EasyDict as edict
+from omegaconf import OmegaConf
 from PIL import Image
 
 from cog import BasePredictor, Input, Path
@@ -77,11 +76,9 @@ class Predictor(BasePredictor):
 
         from saicinpainting.training.trainers import load_checkpoint
 
-        # Read the training config that ships with the checkpoint
-        with open(TRAIN_CONFIG_PATH, "r") as f:
-            train_config = edict(yaml.safe_load(f))
-
-        # Remove keys that are not needed / may cause issues during inference
+        # Read the training config that ships with the checkpoint.
+        # OmegaConf resolves ${...} variable interpolations in the YAML.
+        train_config = OmegaConf.load(TRAIN_CONFIG_PATH)
         train_config.training_model.predict_only = True
 
         self.model = load_checkpoint(
