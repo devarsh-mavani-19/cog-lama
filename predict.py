@@ -108,8 +108,8 @@ class Predictor(BasePredictor):
         img_norm = _norm_img(img_padded)           # (3, H, W) float32 [0,1]
         msk_norm = _norm_img(msk_padded)           # (1, H, W) float32 [0,1]
 
-        # Binarize mask: anything > 0 becomes 1
-        msk_norm = (msk_norm > 0) * 1.0
+        # Binarize mask: anything > 0 becomes 1 (keep float32)
+        msk_norm = (msk_norm > 0).astype("float32")
 
         img_tensor = (
             torch.from_numpy(img_norm).unsqueeze(0).to(self.device)
