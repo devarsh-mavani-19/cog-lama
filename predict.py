@@ -81,12 +81,13 @@ class Predictor(BasePredictor):
         train_config = OmegaConf.load(TRAIN_CONFIG_PATH)
         train_config.training_model.predict_only = True
 
+        self.device = torch.device("cuda")
         self.model = load_checkpoint(
-            train_config, CHECKPOINT_PATH, map_location="cuda", strict=False
+            train_config, CHECKPOINT_PATH, map_location="cpu", strict=False
         )
+        self.model.to(self.device)
         self.model.eval()
         self.model.freeze()
-        self.device = torch.device("cuda")
 
     def predict(
         self,
