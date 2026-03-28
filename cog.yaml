@@ -30,14 +30,7 @@ build:
   run:
     - "pip install wldhx.yadisk-direct"
     - "git clone https://github.com/advimman/lama.git /lama"
-    - |
-      printf '%s\n' \
-        '# Stubbed out – training-only augmentations that require imgaug + old albumentations' \
-        'class IAAAffine2:' \
-        '    pass' \
-        'class IAAPerspective2:' \
-        '    pass' \
-        > /lama/saicinpainting/training/data/aug.py
+    - "printf '# Stubbed: training-only\\nclass IAAAffine2:\\n    pass\\nclass IAAPerspective2:\\n    pass\\n' > /lama/saicinpainting/training/data/aug.py"
     - "curl -L -o /lama/big-lama.zip https://huggingface.co/smartywu/big-lama/resolve/main/big-lama.zip"
     - "cd /lama && unzip big-lama.zip && rm big-lama.zip"
 
